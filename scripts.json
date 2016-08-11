@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "roll": "rollup -c",
+        "browser": "browserify test/src.js > test/code.js",
+        "build": "npm run roll && npm run browser"
+    }
+}
+
+{
+    "scripts": {
+        "roll": "rollup -c",
+        "browser": "cd test && rollup -c",
+        "build": "npm run roll && npm run browser"
+    }
+}
