@@ -3,8 +3,8 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var domSearchReplace = _interopDefault(require('dom-search-replace'));
-var nodeToString = _interopDefault(require('dom-node-tostring'));
 var isElement = _interopDefault(require('is-element'));
+var nodeToString = _interopDefault(require('dom-node-tostring'));
 var domFrom = _interopDefault(require('dom-from'));
 var escapeHTML = _interopDefault(require('escape-html'));
 
@@ -60,25 +60,6 @@ function setElements(root, elements) {
     return root;
 };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
-};
-
-var isElement$1 = function () {
-    if (typeof window === 'undefined') return function () {};
-    if ("HTMLElement" in window) {
-        return function (el) {
-            return el instanceof HTMLElement;
-        };
-    } else {
-        return function (el) {
-            return (typeof el === "undefined" ? "undefined" : _typeof(el)) === "object" && el.nodeType === 1 && typeof el.nodeName === "string";
-        };
-    }
-}();
-
 var operations = [];
 
 Object.defineProperties(operations, {
@@ -92,7 +73,7 @@ Object.defineProperties(operations, {
                 }
             }
 
-            if (!isElement$1(element)) {
+            if (!isElement(element)) {
                 throw new TypeError(element + ' is not a DOM element.');
             }
 
@@ -121,6 +102,12 @@ function createDOMOperations(dom) {
 };
 
 var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+};
 
 var defaultOptions = {
     domlib: createDOMOperations,
