@@ -7,17 +7,7 @@ var isElement = _interopDefault(require('is-element'));
 var nodeToString = _interopDefault(require('dom-node-tostring'));
 var domFrom = _interopDefault(require('dom-from'));
 var escapeHTML = _interopDefault(require('escape-html'));
-
-function createID() {
-  return Date.now() + randomNum();
-};
-
-function randomNum() {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return '_' + Math.random().toString(36).substr(2, 9);
-}
+var createID = _interopDefault(require('really-unique-id'));
 
 function setEvents(root, events) {
 

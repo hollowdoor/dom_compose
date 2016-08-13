@@ -1,4 +1,3 @@
-import createID from './lib/create_id';
 import setEvents from './lib/set_events';
 import setElements from './lib/set_elements';
 import createDOMOperations from './lib/operations';
@@ -6,6 +5,7 @@ import domExists from './lib/global_dom_exists';
 import isElement from 'is-element';
 import domFrom from 'dom-from';
 import escapeHTML from 'escape-html';
+import createID from 'really-unique-id';
 
 const defaultOptions = {
     domlib: createDOMOperations,

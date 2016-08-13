@@ -3,17 +3,7 @@ import isElement from 'is-element';
 import nodeToString from 'dom-node-tostring';
 import domFrom from 'dom-from';
 import escapeHTML from 'escape-html';
-
-function createID() {
-  return Date.now() + randomNum();
-};
-
-function randomNum() {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return '_' + Math.random().toString(36).substr(2, 9);
-}
+import createID from 'really-unique-id';
 
 function setEvents(root, events) {
 
