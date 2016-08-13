@@ -1,10 +1,6 @@
 dom-compose
 ===========
 
-This library is ready for use, but this README is incomplete. There is some significant code cleanup that also needs to be done.
-
-Just letting you know.
-
 Install
 -------
 
@@ -139,3 +135,8 @@ const doc = domCompose({
     escape: (string)=>string
 });
 ```
+
+Some Info
+---------
+
+This library isn't doing anything crazy for now. Who knows where it will go. There are a lot of possibilities.
