@@ -1,6 +1,6 @@
 {
   "name": "dom-compose",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "dom-compose ===========",
   "main": "dist/bundle.js",
   "jsnext:main": "bundle.es.js",
