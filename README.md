@@ -33,5 +33,109 @@ let text = 'world';
 div.innerHTML = `I'm a div.`;
 
 $el = tpl({text, div});
+$el.appendTo(document.querySelector('body'));
+```
 
+Template Literal Values
+-----------------------
+
+The template literal processed by the `doc` accepts these values.
+
+-	DOM Nodes
+-	Function (DOM event callback)
+-	Any primitive Javascript value
+-	An object that obeys the `appendTo` contract
+
+### Primitive values
+
+Any primitive is toStringed.
+
+These values can be inserted anywhere in the template string.
+
+### DOM Nodes
+
+DOM Nodes are inserted in a logical position relative to a parent element. If you try to insert a Node where it doesn't belong the insertion won't work.
+
+### DOM Event Functions
+
+Function values are processed based on the string to their left like:
+
+```javascript
+doc`<p onclick=${(values)=>{/*Function body*/}}>A paragraph.</p>`
+```
+
+Event attributes used this way don't need quotes. They won't work with quotes.
+
+Events set this way are not true inline events. They are extracted, and set with `element.addEventListener`. So without hazard you can do something like this:
+
+```javascript
+doc`<p onclick=${(values)=>{/*Function body*/}} onclick=${(values)=>{/*Function body*/}}>
+A paragraph.
+</p>`
+```
+
+### The appendTo contract
+
+Most DOM manipulation libraries have an `appendTo` method that appends their DOM contents to another element. Some of these are:
+
+-	jQuery
+-	Zepto
+-	spooky-element
+
+Passing an instance from one of the above libraries will append that instance's DOM contents to the DOM created by the `dom-compose` template literal.
+
+The domCompose Function
+-----------------------
+
+The module returns a function that needs to be called to get the `doc` template tag.
+
+This function `domCompose` takes an options object.
+
+These options are:
+
+### options.domlib
+
+Set this to a function that evaluates the HTML input.
+
+```javascript
+import cheerio from 'cheerio';
+import domCompose from 'dom-compose';
+const doc = domCompose({
+    domlib: (html)=>cheerio.load(html)
+});
+
+
+const tpl = (text1, text2, text3) => html `
+    <p>Hello ${text1} ${text2} ${text3}</p>
+    `;
+
+const result = tpl('wide', 'wonderful', 'world');
+/*The result is a cheerio DOM instance*/
+console.log(result.html());
+```
+
+If you use a parser like cheerio you can't set attribute events, or set DOM elements through the template literal.
+
+The default **domlib** is a miniature DOM library with only a few methods.
+
+These methods are:
+
+#### result.appendTo(element)
+
+Append the result to another DOM element.
+
+#### result.html()
+
+Get the html of the result. Unlike most DOM libs `result.html()` is not a setter.
+
+### options.escape
+
+Replace the escape funciton.
+
+```javascript
+import domCompose from 'dom-compose';
+//Here we set escape to not escape at all.
+const doc = domCompose({
+    escape: (string)=>string
+});
 ```
