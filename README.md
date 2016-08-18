@@ -1,6 +1,3 @@
-dom-compose
-===========
-
 Install
 -------
 
