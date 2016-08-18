@@ -16,7 +16,6 @@
   "author": "Quentin Engles <hollowdoor99@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "custom-event": "^1.0.0",
     "dom-from": "^1.0.3",
     "dom-node-tostring": "^1.1.0",
     "dom-search-replace": "^1.1.1",
