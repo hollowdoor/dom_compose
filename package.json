@@ -9,9 +9,9 @@
   },
   "scripts": {
     "test": "cd test && node run.js",
-    "build-test1": "browserify test/src.js > test/code.js",
+    "build-test1": "rollup test/src.js --output test/code.js --format iife",
     "build-test": "npm run build-test1",
-    "build": "rollup -c && npm run build-test"
+    "build": "node ./rollit"
   },
   "author": "Quentin Engles <hollowdoor99@gmail.com>",
   "license": "MIT",
@@ -28,7 +28,10 @@
     "babel-preset-es2015-rollup": "^1.1.1",
     "cheerio": "^0.20.0",
     "jsdom": "^9.4.1",
-    "rollup-plugin-babel": "^2.6.1"
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "uglify-js": "^2.7.5"
   },
   "keywords": [
     "DOM",
