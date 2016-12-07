@@ -1,7 +1,7 @@
 {
   "name": "dom-compose",
   "version": "1.0.8",
-  "description": "dom-compose ===========",
+  "description": "Make DOM from a template string",
   "main": "dist/bundle.js",
   "jsnext:main": "dist/bundle.es.js",
   "directories": {

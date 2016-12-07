@@ -11,7 +11,10 @@ const external = Object.keys(pack.dependencies || {});
 
 rollup.rollup({
     entry: 'src/index.js',
-    plugins: [babel()],
+    plugins: [babel({
+      externalHelpers: false,
+      runtimeHelpers: true
+    })],
     external: external
 }).then((bundle)=>{
     bundle.write({
