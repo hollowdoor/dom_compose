@@ -3,7 +3,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var domSearchReplace = _interopDefault(require('dom-search-replace'));
-var isElement = _interopDefault(require('is-element'));
 var nodeToString = _interopDefault(require('dom-node-tostring'));
 var domFrom = _interopDefault(require('dom-from'));
 var escapeHTML = _interopDefault(require('escape-html'));
@@ -49,49 +48,6 @@ function setElements(root, elements) {
 
     return root;
 }
-
-var operations = [];
-
-Object.defineProperties(operations, {
-    appendTo: {
-        value: function value(element) {
-            if (typeof element === 'string') {
-                try {
-                    element = document.querySelector(element);
-                } catch (e) {
-                    throw new TypeError(element + ' is not a valid selector.');
-                }
-            }
-
-            if (!isElement(element)) {
-                throw new TypeError(element + ' is not a DOM element.');
-            }
-
-            element.appendChild(this[0]);
-        }
-    },
-    html: {
-        value: function value() {
-            return nodeToString(this[0]);
-        }
-    }
-});
-
-function createDOMOperations(dom) {
-    var ops = Object.create(operations);
-
-    Object.defineProperties(ops, {
-        0: {
-            get: function get() {
-                return dom;
-            }
-        }
-    });
-
-    return ops;
-}
-
-var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -293,9 +249,52 @@ var set = function set(object, property, value, receiver) {
   return value;
 };
 
-function isElement$1(value) {
+function isElement(value) {
        return value && value.nodeType === 1 && value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object' && Object.prototype.toString.call(value).indexOf('Element') > -1;
 }
+
+var operations = [];
+
+Object.defineProperties(operations, {
+    appendTo: {
+        value: function value(element) {
+            if (typeof element === 'string') {
+                try {
+                    element = document.querySelector(element);
+                } catch (e) {
+                    throw new TypeError(element + ' is not a valid selector.');
+                }
+            }
+
+            if (!isElement(element)) {
+                throw new TypeError(element + ' is not a DOM element.');
+            }
+
+            element.appendChild(this[0]);
+        }
+    },
+    html: {
+        value: function value() {
+            return nodeToString(this[0]);
+        }
+    }
+});
+
+function createDOMOperations(dom) {
+    var ops = Object.create(operations);
+
+    Object.defineProperties(ops, {
+        0: {
+            get: function get() {
+                return dom;
+            }
+        }
+    });
+
+    return ops;
+}
+
+var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
 function createDOMTemplate() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -323,7 +322,7 @@ function createDOMTemplate() {
                 result += string + escape(value);
             } else if (domExists) {
                 if (type === 'object') {
-                    if (isElement$1(value) || typeof value.appendTo === 'function') {
+                    if (isElement(value) || typeof value.appendTo === 'function') {
                         var id = createID();
 
                         elements.push({

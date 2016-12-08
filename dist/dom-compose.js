@@ -1,4 +1,4 @@
-var autoScroll = (function () {
+var domCompose = (function () {
 'use strict';
 
 function setEvents(root, events) {
@@ -410,80 +410,6 @@ function setElements(root, elements) {
     return root;
 }
 
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-
-
-
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var isElement = createCommonjsModule(function (module, exports) {
-(function (root) {
-  function isElement(value) {
-    return value && value.nodeType === 1 && value && typeof value == 'object' && Object.prototype.toString.call(value).indexOf('Element') > -1;
-  }
-
-  if (typeof exports !== 'undefined') {
-    if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = isElement;
-    }
-    exports.isElement = isElement;
-  } else if (typeof define === 'function' && define.amd) {
-    define([], function () {
-      return isElement;
-    });
-  } else {
-    root.isElement = isElement;
-  }
-})(commonjsGlobal);
-});
-
-var operations = [];
-
-Object.defineProperties(operations, {
-    appendTo: {
-        value: function value(element) {
-            if (typeof element === 'string') {
-                try {
-                    element = document.querySelector(element);
-                } catch (e) {
-                    throw new TypeError(element + ' is not a valid selector.');
-                }
-            }
-
-            if (!isElement(element)) {
-                throw new TypeError(element + ' is not a DOM element.');
-            }
-
-            element.appendChild(this[0]);
-        }
-    },
-    html: {
-        value: function value() {
-            return nodeToString(this[0]);
-        }
-    }
-});
-
-function createDOMOperations(dom) {
-    var ops = Object.create(operations);
-
-    Object.defineProperties(ops, {
-        0: {
-            get: function get() {
-                return dom;
-            }
-        }
-    });
-
-    return ops;
-}
-
-var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
-
 var _typeof$3 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -684,9 +610,52 @@ var set = function set(object, property, value, receiver) {
   return value;
 };
 
-function isElement$2(value) {
+function isElement(value) {
        return value && value.nodeType === 1 && value && (typeof value === 'undefined' ? 'undefined' : _typeof$3(value)) == 'object' && Object.prototype.toString.call(value).indexOf('Element') > -1;
 }
+
+var operations = [];
+
+Object.defineProperties(operations, {
+    appendTo: {
+        value: function value(element) {
+            if (typeof element === 'string') {
+                try {
+                    element = document.querySelector(element);
+                } catch (e) {
+                    throw new TypeError(element + ' is not a valid selector.');
+                }
+            }
+
+            if (!isElement(element)) {
+                throw new TypeError(element + ' is not a DOM element.');
+            }
+
+            element.appendChild(this[0]);
+        }
+    },
+    html: {
+        value: function value() {
+            return nodeToString(this[0]);
+        }
+    }
+});
+
+function createDOMOperations(dom) {
+    var ops = Object.create(operations);
+
+    Object.defineProperties(ops, {
+        0: {
+            get: function get() {
+                return dom;
+            }
+        }
+    });
+
+    return ops;
+}
+
+var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
 /**
  * Expose `parse`.
@@ -988,7 +957,7 @@ function createDOMTemplate() {
                 result += string + escape(value);
             } else if (domExists) {
                 if (type === 'object') {
-                    if (isElement$2(value) || typeof value.appendTo === 'function') {
+                    if (isElement(value) || typeof value.appendTo === 'function') {
                         var id = reallyUniqueId();
 
                         elements.push({

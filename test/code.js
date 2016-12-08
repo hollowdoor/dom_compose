@@ -7,7 +7,7 @@ var _typeof$3 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
     return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
 };
 
-function nodeToString$2(node) {
+function nodeToString(node) {
 
     if ((typeof node === 'undefined' ? 'undefined' : _typeof$3(node)) !== 'object' || typeof node.nodeType === 'undefined') {
         throw new TypeError('In nodeToString: ' + node + ' is not a DOM node.');
@@ -43,18 +43,9 @@ function cloneToString(node) {
     return p.innerHTML;
 }
 
-var bundle$6 = nodeToString$2;
-
 var index = function (re) {
 	return Object.prototype.toString.call(re) === '[object RegExp]';
 };
-
-function _interopDefault$3(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-}
-
-var nodeToString$1 = _interopDefault$3(bundle$6);
-var isRegexp$1 = _interopDefault$3(index);
 
 var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
@@ -62,7 +53,7 @@ var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
     return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
 };
 
-function domSearch$1(doc, pattern, options) {
+function domSearch(doc, pattern, options) {
 
     var search = (typeof options === 'undefined' ? 'undefined' : _typeof$2(options)) === 'object' ? Object.create(options) : {};
     search.all = typeof search.all === 'boolean' ? search.all : false;
@@ -102,7 +93,7 @@ function searchString(doc, search) {
         var child = doc.childNodes[i];
 
         if (child.nodeType === Node.TEXT_NODE) {
-            var str = nodeToString$1(child);
+            var str = nodeToString(child);
 
             if (str.indexOf(search.pattern) !== -1) {
 
@@ -130,7 +121,7 @@ function searchRegexp(doc, search) {
 
         if (child.nodeType === Node.TEXT_NODE) {
 
-            var str = nodeToString$1(child);
+            var str = nodeToString(child);
             var match = void 0;
 
             if ((match = str.match(search.pattern)) !== null) {
@@ -154,7 +145,7 @@ function searchRegexp(doc, search) {
 }
 
 function checkTextNode(node, search) {
-    var str = nodeToString$1(node);
+    var str = nodeToString(node);
 
     if (search.type === 'string') {
         if (doc.indexOf(pattern) !== -1) {
@@ -175,21 +166,12 @@ function checkTextNode(node, search) {
 }
 
 function getPatternType(pattern) {
-    if (isRegexp$1(pattern)) {
+    if (index(pattern)) {
         return 'regexp';
     }
 
     return typeof pattern === 'undefined' ? 'undefined' : _typeof$2(pattern);
 }
-
-var bundle$4 = domSearch$1;
-
-function _interopDefault$2(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-}
-
-var domSearch = _interopDefault$2(bundle$4);
-var isRegexp = _interopDefault$2(index);
 
 var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
@@ -235,7 +217,7 @@ var slicedToArray = function () {
     };
 }();
 
-function domSearchReplace$1(doc, pattern, replacement, options) {
+function domSearchReplace(doc, pattern, replacement, options) {
     var search = (typeof options === 'undefined' ? 'undefined' : _typeof$1(options)) === 'object' ? Object.create(options) : {};
     search.all = typeof search.all === 'boolean' ? search.all : false;
     search.replaceType = getReplacementType(replacement);
@@ -373,7 +355,7 @@ function getReplacementType(replacement) {
 function sameLength(pattern, str) {
     if (typeof pattern === 'string' && pattern.length === str.length) {
         return true;
-    } else if (isRegexp(pattern)) {
+    } else if (index(pattern)) {
         var match = str.match(pattern);
         if (match[0].length === str.length) {
             return true;
@@ -387,44 +369,11 @@ function isNode(o) {
     return (typeof Node === 'undefined' ? 'undefined' : _typeof$1(Node)) === "object" ? o instanceof Node : o && (typeof o === 'undefined' ? 'undefined' : _typeof$1(o)) === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string";
 }
 
-var bundle$2 = domSearchReplace$1;
-
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-
-
-
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var isElement$1$1 = createCommonjsModule(function (module, exports) {
-(function (root) {
-  function isElement(value) {
-    return value && value.nodeType === 1 && value && typeof value == 'object' && Object.prototype.toString.call(value).indexOf('Element') > -1;
-  }
-
-  if (typeof exports !== 'undefined') {
-    if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = isElement;
-    }
-    exports.isElement = isElement;
-  } else if (typeof define === 'function' && define.amd) {
-    define([], function () {
-      return isElement;
-    });
-  } else {
-    root.isElement = isElement;
-  }
-})(commonjsGlobal);
-});
-
 /**
  * Expose `parse`.
  */
 
-var index$4 = parse;
+var index$2 = parse;
 
 /**
  * Tests for browser support.
@@ -518,14 +467,14 @@ function parse(html, doc) {
   return fragment;
 }
 
-var domify = index$4;
+var domify = index$2;
 
 /*
 git remote add origin https://github.com/hollowdoor/dom_from.git
 git push -u origin master
 */
 
-var index$2 = function (el, doc) {
+var index$1 = function (el, doc) {
     var frag, type, i;
 
     if (!doc) {
@@ -580,7 +529,7 @@ var matchHtmlRegExp = /["'&<>]/;
  * @public
  */
 
-var index$6 = escapeHtml;
+var index$4 = escapeHtml;
 
 /**
  * Escape special characters in the given string of html.
@@ -694,17 +643,6 @@ function pad(n, width) {
   }
 }
 
-function _interopDefault$1(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-}
-
-var domSearchReplace = _interopDefault$1(bundle$2);
-var isElement = _interopDefault$1(isElement$1$1);
-var nodeToString = _interopDefault$1(bundle$6);
-var domFrom = _interopDefault$1(index$2);
-var escapeHTML = _interopDefault$1(index$6);
-var createID = _interopDefault$1(reallyUniqueId);
-
 function setEvents(root, events) {
 
   while (events.length) {
@@ -745,49 +683,6 @@ function setElements(root, elements) {
 
   return root;
 }
-
-var operations = [];
-
-Object.defineProperties(operations, {
-  appendTo: {
-    value: function value(element) {
-      if (typeof element === 'string') {
-        try {
-          element = document.querySelector(element);
-        } catch (e) {
-          throw new TypeError(element + ' is not a valid selector.');
-        }
-      }
-
-      if (!isElement(element)) {
-        throw new TypeError(element + ' is not a DOM element.');
-      }
-
-      element.appendChild(this[0]);
-    }
-  },
-  html: {
-    value: function value() {
-      return nodeToString(this[0]);
-    }
-  }
-});
-
-function createDOMOperations(dom) {
-  var ops = Object.create(operations);
-
-  Object.defineProperties(ops, {
-    0: {
-      get: function get() {
-        return dom;
-      }
-    }
-  });
-
-  return ops;
-}
-
-var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -955,16 +850,59 @@ var set = function set(object, property, value, receiver) {
   return value;
 };
 
-function isElement$1(value) {
+function isElement(value) {
   return value && value.nodeType === 1 && value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object' && Object.prototype.toString.call(value).indexOf('Element') > -1;
 }
 
-function createDOMTemplate() {
+var operations = [];
+
+Object.defineProperties(operations, {
+  appendTo: {
+    value: function value(element) {
+      if (typeof element === 'string') {
+        try {
+          element = document.querySelector(element);
+        } catch (e) {
+          throw new TypeError(element + ' is not a valid selector.');
+        }
+      }
+
+      if (!isElement(element)) {
+        throw new TypeError(element + ' is not a DOM element.');
+      }
+
+      element.appendChild(this[0]);
+    }
+  },
+  html: {
+    value: function value() {
+      return nodeToString(this[0]);
+    }
+  }
+});
+
+function createDOMOperations(dom) {
+  var ops = Object.create(operations);
+
+  Object.defineProperties(ops, {
+    0: {
+      get: function get() {
+        return dom;
+      }
+    }
+  });
+
+  return ops;
+}
+
+var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
+
+function createDOMTemplate$1() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$domlib = _ref.domlib,
       domlib = _ref$domlib === undefined ? createDOMOperations : _ref$domlib,
       _ref$escape = _ref.escape,
-      escape = _ref$escape === undefined ? escapeHTML : _ref$escape;
+      escape = _ref$escape === undefined ? index$4 : _ref$escape;
 
   return function html(strings) {
 
@@ -985,8 +923,8 @@ function createDOMTemplate() {
         result += string + escape(value);
       } else if (domExists) {
         if (type === 'object') {
-          if (isElement$1(value) || typeof value.appendTo === 'function') {
-            var id = createID();
+          if (isElement(value) || typeof value.appendTo === 'function') {
+            var id = reallyUniqueId();
 
             elements.push({
               id: id,
@@ -1001,7 +939,7 @@ function createDOMTemplate() {
           var m = void 0;
           if (m = string.match(/[\s](on[\S]+)=$/)) {
 
-            var _id = createID();
+            var _id = reallyUniqueId();
             events.push({
               id: _id,
               attribute: m[1],
@@ -1023,7 +961,7 @@ function createDOMTemplate() {
     result = (result += string).trim();
 
     if (domExists) {
-      dom = domFrom(result);
+      dom = index$1(result);
 
       dom = setElements(dom, elements);
       setEvents(dom, events);
@@ -1033,31 +971,225 @@ function createDOMTemplate() {
   };
 }
 
-/*
-git remote add origin https://github.com/hollowdoor/dom_compose.git
-git push -u origin master
-*/
+var asyncGenerator$1 = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
 
-var bundle$1 = createDOMTemplate;
+  function AsyncGenerator(gen) {
+    var front, back;
 
-const doc$1 = bundle$1();
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var get$1$1 = function get$1$1(object, property, receiver) {
+  if (object === null) object = Function.prototype;
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent === null) {
+      return undefined;
+    } else {
+      return get$1$1(parent, property, receiver);
+    }
+  } else if ("value" in desc) {
+    return desc.value;
+  } else {
+    var getter = desc.get;
+
+    if (getter === undefined) {
+      return undefined;
+    }
+
+    return getter.call(receiver);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var set$1 = function set$1(object, property, value, receiver) {
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent !== null) {
+      set$1(parent, property, value, receiver);
+    }
+  } else if ("value" in desc && desc.writable) {
+    desc.value = value;
+  } else {
+    var setter = desc.set;
+
+    if (setter !== undefined) {
+      setter.call(receiver, value);
+    }
+  }
+
+  return value;
+};
+
+
+
+
+
+var taggedTemplateLiteral = function (strings, raw) {
+  return Object.freeze(Object.defineProperties(strings, {
+    raw: {
+      value: Object.freeze(raw)
+    }
+  }));
+};
+
+var _templateObject = taggedTemplateLiteral(['\n    <div>Hello ', ' ', '\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n'], ['\n    <div>Hello ', ' ', '\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n']);
+
+var doc$1 = createDOMTemplate$1();
 //With commonjs
 //const doc = require('dom-compose')();
 
-const tpl = input => doc$1`
-    <div>Hello ${ input.text } ${ input.div }
-    <button onclick=${ event => {
-    console.log('hello');
-} }>Say</button>
-    <input class="greeting">
-    </div>
-`;
+var tpl = function tpl(input) {
+    return doc$1(_templateObject, input.text, input.div, function (event) {
+        console.log('hello');
+    });
+};
 
-let div = document.createElement('div');
-let text = 'world';
-div.innerHTML = `I'm a div.`;
+var div = document.createElement('div');
+var text = 'world';
+div.innerHTML = 'I\'m a div.';
 
-let $el = tpl({ text, div });
+var $el = tpl({ text: text, div: div });
 $el.appendTo(document.querySelector('body'));
 
 }());

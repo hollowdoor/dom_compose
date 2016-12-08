@@ -11,10 +11,7 @@ const external = Object.keys(pack.dependencies || {});
 
 rollup.rollup({
     entry: 'src/index.js',
-    plugins: [babel({
-      externalHelpers: false,
-      runtimeHelpers: true
-    })],
+    plugins: [babel()],
     external: external
 }).then((bundle)=>{
     bundle.write({
@@ -29,6 +26,7 @@ rollup.rollup({
         format: 'es',
         sourceMap: true
     });
+    buildTest();
 }).catch(onErrorCB('bundle'));
 
 
@@ -48,7 +46,7 @@ rollup.rollup({
         dest: 'dist/dom-compose.js',
         format: 'iife',
         sourceMap: true,
-        moduleName: 'autoScroll'
+        moduleName: 'domCompose'
     });
 
     b.then(what=>{
@@ -64,24 +62,29 @@ rollup.rollup({
     })
 }).catch(onErrorCB('script sources'));
 
-rollup.rollup({
-    entry: 'test/src.js',
-    plugins: [
-        babel(),
-        nodeResolve({
-            main: true
-        }),
-        commonjs()
-    ]
-}).then(bundle=>{
-    //console.log('what')
-    bundle.write({
-        dest: 'test/code.js',
-        format: 'iife',
-        sourceMap: true,
-        moduleName: 'autoScroll'
-    });
-}).catch(onErrorCB('test code'));
+function buildTest(){
+    rollup.rollup({
+        entry: 'test/src.js',
+        plugins: [
+            nodeResolve({
+                main: true,
+                jsnext: true
+            }),
+            commonjs(),
+            babel()
+
+        ]
+    }).then(bundle=>{
+        //console.log('what')
+        bundle.write({
+            dest: 'test/code.js',
+            format: 'iife',
+            sourceMap: true,
+            moduleName: 'none'
+        });
+    }).catch(onErrorCB('test code'));
+
+}
 
 function onErrorCB(message){
     return function(e){

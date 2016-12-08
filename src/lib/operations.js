@@ -1,4 +1,4 @@
-import isElement from 'is-element';
+import isElement from './is_element.js';
 import nodeToString from 'dom-node-tostring';
 let operations = [];
 
