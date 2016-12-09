@@ -168,6 +168,8 @@ const doc = domCompose({
 
 The `styleToHead` option sets whether to move a style tag to the head of the document if your template contains a style tag. The default is false.
 
+Make sure to set a unique id for your style tag. Without it you will get unexpected results.
+
 ```javascript
 import domCompose from 'dom-compose';
 //Here we set escape to not escape at all.
@@ -177,7 +179,7 @@ const doc = domCompose({
 
 const tpl = ()=> `
     <div>
-        <style> #todo-list {border: 1px solid red; } </style>
+        <style id="uniq-id"> #todo-list {border: 1px solid red; } </style>
         <ul id="todo-list">
             <li>Milk</li>
             <li>Bread</li>
@@ -193,7 +195,7 @@ The next example won't work.
 ```javascript
 //This is going to break your script.
 const tpl = ()=> `
-    <style> #todo-list {border: 1px solid red; } </style>
+    <style id="uniq-id"> #todo-list {border: 1px solid red; } </style>
     <div>
         <ul id="todo-list">
             <li>Milk</li>

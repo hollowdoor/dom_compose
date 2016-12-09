@@ -4,9 +4,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var domSearchReplace = _interopDefault(require('dom-search-replace'));
 var nodeToString = _interopDefault(require('dom-node-tostring'));
+var createID = _interopDefault(require('really-unique-id'));
 var domFrom = _interopDefault(require('dom-from'));
 var escapeHTML = _interopDefault(require('escape-html'));
-var createID = _interopDefault(require('really-unique-id'));
 
 function setEvents(root, events) {
 
@@ -297,11 +297,19 @@ function createDOMOperations(dom) {
 var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
 function moveStyle(root) {
-    var styles = root.querySelectorAll('style');
+
     var head = document.querySelector('head');
+    var styleIDs = [].slice.call(head.querySelectorAll('style')).map(function (style) {
+        return style.getAttribute('id');
+    });
+
+    var styles = [].slice.call(root.querySelectorAll('style')).filter(function (style) {
+        return styleIDs.indexOf(style.getAttribute('id')) === -1;
+    });
+
     if (styles && styles.length) {
-        [].slice.call(styles).forEach(function (style) {
-            head.appendChild(style);
+        styles.forEach(function (style) {
+            return head.appendChild(style);
         });
     }
 }
