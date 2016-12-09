@@ -1,6 +1,6 @@
 {
   "name": "dom-compose",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Make DOM from a template string",
   "main": "dist/bundle.js",
   "jsnext:main": "dist/bundle.es.js",
