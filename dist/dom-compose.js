@@ -657,6 +657,16 @@ function createDOMOperations(dom) {
 
 var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
+function moveStyle(root) {
+    var styles = root.querySelectorAll('style');
+    var head = document.querySelector('head');
+    if (styles && styles.length) {
+        [].slice.call(styles).forEach(function (style) {
+            head.appendChild(style);
+        });
+    }
+}
+
 /**
  * Expose `parse`.
  */
@@ -936,7 +946,9 @@ function createDOMTemplate() {
         _ref$domlib = _ref.domlib,
         domlib = _ref$domlib === undefined ? createDOMOperations : _ref$domlib,
         _ref$escape = _ref.escape,
-        escape = _ref$escape === undefined ? index$4 : _ref$escape;
+        escape = _ref$escape === undefined ? index$4 : _ref$escape,
+        _ref$styleToHead = _ref.styleToHead,
+        styleToHead = _ref$styleToHead === undefined ? true : _ref$styleToHead;
 
     return function html(strings) {
 
@@ -999,6 +1011,10 @@ function createDOMTemplate() {
 
             dom = setElements(dom, elements);
             setEvents(dom, events);
+
+            if (styleToHead) {
+                moveStyle(dom);
+            }
         }
 
         return domlib(dom || result);

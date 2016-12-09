@@ -3,6 +3,7 @@ import setElements from './lib/set_elements';
 import createDOMOperations from './lib/operations';
 import domExists from './lib/global_dom_exists';
 import isElement from './lib/is_element.js';
+import moveStyle from './lib/move_style.js';
 import domFrom from 'dom-from';
 import escapeHTML from 'escape-html';
 import createID from 'really-unique-id';
@@ -14,7 +15,8 @@ const defaultOptions = {
 
 function createDOMTemplate({
     domlib: domlib = createDOMOperations,
-    escape: escape = escapeHTML
+    escape: escape = escapeHTML,
+    styleToHead: styleToHead = true
 } = {}){
 
     return function html(strings){
@@ -79,6 +81,10 @@ function createDOMTemplate({
 
             dom = setElements(dom, elements);
             setEvents(dom, events);
+
+            if(styleToHead){
+                moveStyle(dom);
+            }
         }
 
         return domlib(dom || result);

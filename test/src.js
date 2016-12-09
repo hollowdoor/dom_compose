@@ -4,7 +4,10 @@ const doc = domCompose();
 //const doc = require('dom-compose')();
 
 const tpl = (input) => doc `
-    <div>Hello ${input.text} ${input.div}
+
+    <div>
+    <style>.greeting{ border: 1px solid red; }</style>
+    <p>Hello ${input.text} ${input.div}</p>
     <button onclick=${(event)=>{
         console.log('hello');
     }}>Say</button>

@@ -897,12 +897,24 @@ function createDOMOperations(dom) {
 
 var domExists = typeof document !== 'undefined' && typeof document.getElementById === 'function' && typeof document.createDocumentFragment === 'function';
 
+function moveStyle(root) {
+  var styles = root.querySelectorAll('style');
+  var head = document.querySelector('head');
+  if (styles && styles.length) {
+    [].slice.call(styles).forEach(function (style) {
+      head.appendChild(style);
+    });
+  }
+}
+
 function createDOMTemplate$1() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$domlib = _ref.domlib,
       domlib = _ref$domlib === undefined ? createDOMOperations : _ref$domlib,
       _ref$escape = _ref.escape,
-      escape = _ref$escape === undefined ? index$4 : _ref$escape;
+      escape = _ref$escape === undefined ? index$4 : _ref$escape,
+      _ref$styleToHead = _ref.styleToHead,
+      styleToHead = _ref$styleToHead === undefined ? true : _ref$styleToHead;
 
   return function html(strings) {
 
@@ -965,6 +977,10 @@ function createDOMTemplate$1() {
 
       dom = setElements(dom, elements);
       setEvents(dom, events);
+
+      if (styleToHead) {
+        moveStyle(dom);
+      }
     }
 
     return domlib(dom || result);
@@ -1173,7 +1189,7 @@ var taggedTemplateLiteral = function (strings, raw) {
   }));
 };
 
-var _templateObject = taggedTemplateLiteral(['\n    <div>Hello ', ' ', '\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n'], ['\n    <div>Hello ', ' ', '\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n']);
+var _templateObject = taggedTemplateLiteral(['\n\n    <div>\n    <style>.greeting{ border: 1px solid red; }</style>\n    <p>Hello ', ' ', '</p>\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n'], ['\n\n    <div>\n    <style>.greeting{ border: 1px solid red; }</style>\n    <p>Hello ', ' ', '</p>\n    <button onclick=', '>Say</button>\n    <input class="greeting">\n    </div>\n']);
 
 var doc$1 = createDOMTemplate$1();
 //With commonjs
